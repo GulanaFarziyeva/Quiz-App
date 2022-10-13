@@ -1,0 +1,135 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Serif", serif;
+}
+
+body{
+    background-color: #17181c;
+}
+
+.background{
+    background-color: #F8F9F7;
+}
+
+.start-quiz,
+.main{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn-start{
+    width: 250px;
+    height: 50px;
+    background: none;
+    color: #e4cb58;
+    border: 2px solid #e4cb58;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: all .5s ease-in-out;
+}
+
+.btn-start:hover,
+.btn-start:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em #e5ff60;
+  transform: translateY(-0.25em);
+  cursor: pointer;
+}
+
+
+.main{
+    width: 500px;
+    border: 1px solid #CCD1D1 ;
+    display: none;
+}
+
+.main.active{
+    display: block;
+}
+
+.btn-start.non-active{
+    display: none;
+}
+
+.card-header{
+    padding: 10px 15px;
+    background-color: #EFEEE8;
+    border-bottom: 1px solid #CCD1D1;
+}
+
+.title{
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.card-body{
+    padding: 24px 15px 20px 15px;
+}
+
+.question-text{
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+span{
+    font-size: 15px;
+    color: #0B1C2C;
+}
+
+i{
+    font-size: 13px;
+}
+
+.option{
+    border: 1px solid #0B1C2C;
+    border-radius: 5px;
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition:  all .5s ease;
+}
+
+.option:hover{
+    background-color: #ffD33D;
+    color: #11282C;
+}
+
+.option.correct {
+    color: #155724;
+    background-color: #deedda;
+}
+
+.option.incorrect {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+.card-footer{
+    background-color: #EFEEE8;
+    height: 50px;
+    padding: 0 15px;
+    border-top: 1px solid #CCD1D1;
+    display: flex;
+    align-items: center;
+}
+
+.next-question-btn{
+    background: rgba(0, 0, 255, 0.745);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    width: 120px;
+    padding: 7px 0;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.next-question-btn:hover{
+    opacity: .8;
+}
