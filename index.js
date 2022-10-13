@@ -1,9 +1,13 @@
 const body = document.querySelector("body");
 const main = document.querySelector(".main");
 const startBtn = document.querySelector(".btn-start");
-const questionText = document.querySelector('.question-text');
-const optionList = document.querySelector('.option-list');
-const nextQuestionBtn = document.querySelector('.next-question-btn');
+const questionText = document.querySelector(".question-text");
+const optionList = document.querySelector(".option-list");
+const nextQuestionBtn = document.querySelector(".next-question-btn");
+const questionIndexBtn = document.querySelector('.question-index');
+
+const correctIcon = '<div><i class="fa fa-duotone fa-check"></i></div>';
+const incorrectIcon = '<div><i class="fa fa-regular fa-x"></i></div>';
 
 class Question {
   constructor(questionText, options, correctVariant) {
@@ -12,19 +16,8 @@ class Question {
     this.correctVariant = correctVariant;
   }
 
-  checkTheAnswer(answer) {
-    return answer === this.correctVariant;
-  }
-}
-
-class Quiz {
-  constructor(questions) {
-    this.questions = questions;
-    this.questionsIndex = 0;
-  }
-
-  getQuestions() {
-    return this.questions[this.questionsIndex];
+  checkTheAnswer(val) {
+    return val === this.correctVariant;
   }
 }
 
@@ -57,6 +50,17 @@ let questions = [
 ];
 
 
+class Quiz {
+  constructor(questions) {
+    this.questions = questions;
+    this.questionsIndex = 0;
+  }
+
+  getQuestions() {
+    return this.questions[this.questionsIndex];
+  }
+}
+
 const quiz = new Quiz(questions);
 
 startBtn.addEventListener("click", () => {
@@ -64,35 +68,64 @@ startBtn.addEventListener("click", () => {
   body.classList.add("background");
   main.classList.add("active");
 
-    let question = quiz.getQuestions();
-    showQuestion(quiz.getQuestions())
-
+  let question = quiz.getQuestions();
+  showQuestionNumber(quiz.questionsIndex +1, quiz.questions.length);
+  showQuestion(quiz.getQuestions());
 });
 
-nextQuestionBtn.addEventListener('click', () =>{
+nextQuestionBtn.addEventListener("click", () => {
   if (quiz.questions.length != quiz.questionsIndex + 1) {
     quiz.questionsIndex += 1;
-    showQuestion(quiz.getQuestions())
+    showQuestionNumber(quiz.questionsIndex +1, quiz.questions.length);
+    showQuestion(quiz.getQuestions());
   } else {
-    console.log('Finished')
-  };
-
-})
+    console.log("Finished");
+  }
+});
 
 function showQuestion(item) {
   let question = `<span>${item.questionText}</span>`;
   let options = "";
 
   for (let variant in item.options) {
-    options +=
-   `
+    options += `
      <div class="option">
        <span><b>${variant}</b>: ${item.options[variant]}</span>
      </div>
    `;
-  };
+  }
 
   questionText.innerHTML = question;
   optionList.innerHTML = options;
 
+  let allOptions = optionList.querySelectorAll(".option");
+
+  for (let vaule of allOptions) {
+    vaule.setAttribute("onclick", "optionSelected(this)");
+  }
+};
+
+function optionSelected(option) {
+  let answer = option.querySelector("span b").textContent;
+  let question = quiz.getQuestions();
+  console.log(answer);
+
+  let item = quiz.getQuestions();
+
+  if (question.checkTheAnswer(answer)) {
+    option.classList.add("correct");
+    option.insertAdjacentHTML('beforeend', correctIcon);
+  } else {
+    option.classList.add("incorrect");
+    option.insertAdjacentHTML('beforeend', incorrectIcon);
+  }
+
+  for(let i=0; i< optionList.children.length; i++){
+    optionList.children[i].classList.add('disabled');
+  }
+};
+
+function showQuestionNumber(questionNumber, allQuestionNumber){
+  let questionIndex = `<span class="question-index-btn">${questionNumber}/${allQuestionNumber}</span>`;
+  questionIndexBtn.innerHTML = questionIndex;
 }
